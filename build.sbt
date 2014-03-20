@@ -11,7 +11,7 @@ libraryDependencies ++= Seq(
 
 commands ++= Seq(Command.single("deploy") { (state, argument) =>
     println("Deploying to " + argument)
-    ("cp web/index.html web/main.css target/scala-2.10/2048-heuristic-opt.js " + argument !)
+    ("cp web/index.html web/main.css web/main.js target/scala-2.10/2048-heuristic-opt.js " + argument !)
     state
 })
 
