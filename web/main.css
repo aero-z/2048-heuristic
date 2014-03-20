@@ -1,5 +1,10 @@
+.row {
+  line-height: 0;
+}
+
 .cell {
   display: inline-block;
+  margin: 1px;
 }
 
 .cell_content {
