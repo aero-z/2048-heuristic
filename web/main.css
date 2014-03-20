@@ -5,6 +5,7 @@
 .cell {
   display: inline-block;
   margin: 1px;
+  cursor: pointer;
 }
 
 .cell_content {
