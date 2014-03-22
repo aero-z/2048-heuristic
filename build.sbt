@@ -15,5 +15,7 @@ commands ++= Seq(Command.single("deploy") { (state, argument) =>
     state
 })
 
-addCommandAlias("optDeploy", ";optimizeJS ;deploy ../2048-heuristic-gh-pages")
+addCommandAlias("mydeploy", "deploy ../2048-heuristic-gh-pages")
+
+addCommandAlias("optdeploy", ";optimizeJS ;mydeploy")
 
