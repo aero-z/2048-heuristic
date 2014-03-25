@@ -19,7 +19,18 @@ class GameStateJS(state: GameState) {
   }
   
   @JSExport
+  def move(move: String) = {
+    new GameStateJS(state.move(move match {
+      case "up" => MoveUp
+      case "down" => MoveDown
+      case "left" => MoveLeft
+      case "right" => MoveRight
+      case _ => error("undefined move")
+    }))
+  }
+  
+  @JSExport
   def setBlock(x: Int, y: Int, v: Int) = {
-    new GameStateJS(state.setBlock(Block(x, y, v)))
+    new GameStateJS(state.setBlock(x, y, v))
   }
 }

@@ -13,6 +13,11 @@ function onClickCell(x,y) {
   updateCells(game);
 }
 
+function onButtonMove(move) {
+  game = game.move(move);
+  updateCells(game);
+}
+
 function updateCells(game) {
   $(".cell_content").each(function(i) {
     var n = game.getCell(Math.floor(i/4), i % 4);
