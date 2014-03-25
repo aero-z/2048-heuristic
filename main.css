@@ -9,7 +9,7 @@
 }
 
 .cell_content {
-  background-color: #BB0000;
+  background-color: #CCCCCC;
   
   height: 100px;
   width: 100px;
@@ -20,4 +20,8 @@
   
   font-size: 22pt;
   color: white;
+}
+
+.cell_content_block {
+  background-color: #BB0000;
 }
