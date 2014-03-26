@@ -21,7 +21,7 @@ function updateCells(game) {
       $(this).text("");
     }
     else {
-      var f = (Math.log2(n) - 1) / 10;
+      var f = (Math.log(n)/Math.LN2 - 1) / 10;
       var r = Math.floor(255 * f);
       var g = Math.floor(255 - 255 * f);
       $(this).css("background-color", "rgb(" + r + ", " + g + ", 0)");
