@@ -23,12 +23,12 @@ body {
   text-align: center;
   vertical-align: middle;
   
-  font-size: 22pt;
+  font-size: 28pt;
   color: white;
 }
 
 .cell_content_block {
-  background-color: #BB0000;
+  background-color: #DD0000;
 }
 
 .button {
