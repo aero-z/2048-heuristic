@@ -1,3 +1,8 @@
+body {
+  font-family: 'Inconsolata', serif;
+/*  font-size: 48px;*/
+}
+
 .row {
   line-height: 0;
 }
@@ -18,10 +23,23 @@
   text-align: center;
   vertical-align: middle;
   
-  font-size: 22pt;
+  font-size: 32pt;
   color: white;
 }
 
 .cell_content_block {
-  background-color: #BB0000;
+  background-color: #DD0000;
+}
+
+.button {
+  background-color: #111111;
+  
+  height: 80px;
+  width: 80px;
+  
+  color: white;
+}
+
+.h-center {
+  text-align: center;
 }

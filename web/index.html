@@ -6,8 +6,12 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
   <script type="text/javascript" src="2048-heuristic-opt.js"></script>
   <link href="main.css" rel="stylesheet" type="text/css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
 </head>
 <body>
+
+<div class="h-center">
 
 <h1>2048 Heuristic</h1>
 
@@ -26,10 +30,17 @@
   <div class="cell"><div class="cell_content"></div></div><div class="cell"><div class="cell_content"></div></div><div class="cell"><div class="cell_content"></div></div><div class="cell"><div class="cell_content"></div></div>
 </div>
 
-<button onclick="onButtonMove('up')">Move Up</button>
-<button onclick="onButtonMove('down')">Move Down</button>
-<button onclick="onButtonMove('left')">Move Left</button>
-<button onclick="onButtonMove('right')">Move Right</button>
+<br/>
+
+<div class="h-center">
+  <button onclick="onButtonMove('up')" class="button"><i class="fa fa-arrow-up fa-2x"></i></button>
+</div>
+<div class="h-center">
+  <button onclick="onButtonMove('left')" class="button"><i class="fa fa-arrow-left fa-2x"></i></button><button onclick="onButtonMove('down')" class="button"><i class="fa fa-arrow-down fa-2x"></i></button><button onclick="onButtonMove('right')" class="button"><i class="fa fa-arrow-right fa-2x"></i></button>
+</div>
+
+
+</div>
 
 <script type="text/javascript" src="main.js"></script>
 
