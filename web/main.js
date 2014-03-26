@@ -1,14 +1,9 @@
 
-var remainingBlocksToAdd = 2;
-
 var game = new GameStateJS()
 
 function onClickCell(x,y) {
-  if (remainingBlocksToAdd > 0) {
-    if (game.getCell(x,y) === 0) {
-      game = game.setBlock(x,y,2);
-      remainingBlocksToAdd--;
-    }
+  if (game.getCell(x,y) === 0) {
+    game = game.setBlock(x,y,2);
   }
   updateCells(game);
 }
@@ -39,6 +34,4 @@ function init() {
 }
 
 init()
-$("#text").text("Select starting blocks")
-
 
