@@ -1,3 +1,8 @@
+body {
+  font-family: 'Inconsolata', serif;
+/*  font-size: 48px;*/
+}
+
 .row {
   line-height: 0;
 }
@@ -24,4 +29,17 @@
 
 .cell_content_block {
   background-color: #BB0000;
+}
+
+.button {
+  background-color: #111111;
+  
+  height: 80px;
+  width: 80px;
+  
+  color: white;
+}
+
+.h-center {
+  text-align: center;
 }
