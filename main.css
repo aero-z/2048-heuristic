@@ -14,8 +14,6 @@ body {
 }
 
 .cell_content {
-  background-color: #CCCCCC;
-  
   height: 100px;
   width: 100px;
   
@@ -25,10 +23,6 @@ body {
   
   font-size: 28pt;
   color: white;
-}
-
-.cell_content_block {
-  background-color: #DD0000;
 }
 
 .button {

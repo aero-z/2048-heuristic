@@ -1,14 +1,9 @@
 
-var remainingBlocksToAdd = 2;
-
 var game = new GameStateJS()
 
 function onClickCell(x,y) {
-  if (remainingBlocksToAdd > 0) {
-    if (game.getCell(x,y) === 0) {
-      game = game.setBlock(x,y,2);
-      remainingBlocksToAdd--;
-    }
+  if (game.getCell(x,y) === 0) {
+    game = game.setBlock(x,y,2);
   }
   updateCells(game);
 }
@@ -22,11 +17,14 @@ function updateCells(game) {
   $(".cell_content").each(function(i) {
     var n = game.getCell(Math.floor(i/4), i % 4);
     if (n === 0) {
-      $(this).removeClass("cell_content_block");
+      $(this).css("background-color", "#CCCCCC");
       $(this).text("");
     }
     else {
-      $(this).addClass("cell_content_block");
+      var f = (Math.log2(n) - 1) / 10;
+      var r = Math.floor(255 * f);
+      var g = Math.floor(255 - 255 * f);
+      $(this).css("background-color", "rgb(" + r + ", " + g + ", 0)");
       $(this).text(n);
     }
   });
@@ -36,9 +34,8 @@ function init() {
   $(".cell_content").each(function(i) {
     $(this).click(onClickCell.bind(null, Math.floor(i/4), i % 4));
   });
+  updateCells(game);
 }
 
 init()
-$("#text").text("Select starting blocks")
-
 
