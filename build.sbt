@@ -15,7 +15,14 @@ commands ++= Seq(Command.single("deploy") { (state, argument) =>
     state
 })
 
-addCommandAlias("mydeploy", "deploy ../2048-heuristic-gh-pages")
+commands ++= Seq(Command.command("jslint") { state =>
+    ("jslint web/main.js" !) match {
+        case 0 => state
+        case _ => state.fail
+    }
+})
+
+addCommandAlias("mydeploy", ";jslint ;deploy ../2048-heuristic-gh-pages")
 
 addCommandAlias("optdeploy", ";optimizeJS ;mydeploy")
 
