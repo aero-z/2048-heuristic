@@ -7,6 +7,13 @@ import heuristic2048._
 
 @JSExport
 class GameStateJS(state: GameState) {
+  private val moveMapping: Map[Move, String] = Map(
+    MoveUp -> "up",
+    MoveDown -> "down",
+    MoveLeft -> "left",
+    MoveRight -> "right"
+  )
+  
   @JSExport
   def this() = this(new GameState())
   
@@ -20,17 +27,16 @@ class GameStateJS(state: GameState) {
   
   @JSExport
   def move(move: String) = {
-    new GameStateJS(state.move(move match {
-      case "up" => MoveUp
-      case "down" => MoveDown
-      case "left" => MoveLeft
-      case "right" => MoveRight
-      case _ => error("undefined move")
-    }))
+    new GameStateJS(state.move(moveMapping.find(_._2 == move).get._1))
   }
   
   @JSExport
   def setBlock(x: Int, y: Int, v: Int) = {
     new GameStateJS(state.setBlock(x, y, v))
+  }
+  
+  @JSExport
+  def getProposedMove() = {
+    moveMapping(Heuristic.getProposedMove(state))
   }
 }
