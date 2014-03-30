@@ -1,3 +1,4 @@
+"use strict";
 
 var game = new GameStateJS()
 
@@ -5,15 +6,31 @@ function onClickCell(x,y) {
   if (game.getCell(x,y) === 0) {
     game = game.setBlock(x,y,2);
   }
-  updateCells(game);
+  update();
 }
 
 function onButtonMove(move) {
   game = game.move(move);
-  updateCells(game);
+  update();
 }
 
-function updateCells(game) {
+function update() {
+  updateProposedMove();
+  updateCells();
+}
+
+function updateProposedMove() {
+  var proposedMove = game.getProposedMove();
+  var normalColour = "#111111";
+  var proposedColour = "#BB1111";
+  var moves = ["up", "down", "left", "right"];
+  _.each(moves, function(move) {
+    var colour = (move === proposedMove) ? proposedColour : normalColour;
+    $('button=[name='+move+']').css("background-color", colour);
+  })
+}
+
+function updateCells() {
   $(".cell_content").each(function(i) {
     var n = game.getCell(Math.floor(i/4), i % 4);
     if (n === 0) {
@@ -37,5 +54,5 @@ function init() {
   updateCells(game);
 }
 
-init()
+init();
 
