@@ -23,22 +23,19 @@ class GameState(val cells: List[List[Cell]]) {
           line(0) :: combine(line.tail)
       }
     }
-    def moveHorizontal(cells: List[List[Cell]], move: Move) = {
+    def moveLeft(cells: List[List[Cell]]) = {
       cells.map(col => {
         val blocks = col.collect({ case b: BlockCell => b })
         val combined = combine(blocks)
         val padding = List.fill(4 - combined.length)(EmptyCell)
-        (move: @unchecked) match {
-          case MoveLeft => combined ::: padding
-          case MoveRight => padding ::: combined
-        }          
+        combined ::: padding        
       })
     }
     new GameState(move match {
-      case MoveLeft => moveHorizontal(cells, MoveLeft)
-      case MoveRight => moveHorizontal(cells, MoveRight)
-      case MoveUp => moveHorizontal(cells.transpose, MoveLeft).transpose
-      case MoveDown => moveHorizontal(cells.transpose, MoveRight).transpose
+      case MoveLeft => moveLeft(cells)
+      case MoveRight => moveLeft(cells.map(_.reverse)).map(_.reverse)
+      case MoveUp => moveLeft(cells.transpose).transpose
+      case MoveDown => moveLeft(cells.transpose.map(_.reverse)).map(_.reverse).transpose
     })
   }
   
