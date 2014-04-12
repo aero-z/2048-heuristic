@@ -14,8 +14,12 @@ object Move {
   def fromString(s: String) = all.find(_.toString == s).get
 }
 
-class GameState(val cells: List[List[Cell]]) {
+case class GameState(val cells: List[List[Cell]]) {
   def this() = this(List.fill(4, 4)(EmptyCell))
+  
+  def getPossibleMoves(): List[(Move, GameState)] = {
+    Move.all.map(m => (m, move(m))).filter(_._2 != this)
+  }
 
   def move(move: Move): GameState = {
     def combine(line: List[BlockCell]): List[BlockCell] = {
