@@ -12,7 +12,7 @@ function updateProposedMove() {
         moves = ["up", "down", "left", "right"];
     _.each(moves, function (move) {
         var colour = (move === proposedMove) ? proposedColour : normalColour;
-        $('button=[name=' + move + ']').css("background-color", colour);
+        $('button[name=' + move + ']').css("background-color", colour);
     });
 }
 
@@ -42,16 +42,30 @@ function onButtonMove(move) {
     update();
 }
 
-function onClickCell(x, y) {
-    if (game.getCell(x, y) === 0) {
-        game = game.setBlock(x, y, 2);
+function onClickCell(isLeftButton, x, y) {
+    var value = Math.max(1, game.getCell(x, y));
+    if (isLeftButton) {
+        value *= 2;
+    } else if (value > 1) {
+        value /= 2;
     }
+    if (value === 1) {
+        value = 0;
+    }
+    game = game.setBlock(x, y, value);
     update();
 }
 
 function init() {
     $(".cell_content").each(function (i) {
-        $(this).click(onClickCell.bind(null, Math.floor(i / 4), i % 4));
+        $(this).on('click', function () {
+            onClickCell(true, Math.floor(i / 4), i % 4);
+            return true;
+        });
+        $(this).on('contextmenu', function (e) {
+            onClickCell(false, Math.floor(i / 4), i % 4);
+            return false; // prevent default context menu behaviour
+        });
     });
     updateCells(game);
 }
