@@ -4,16 +4,21 @@
 "use strict";
 
 var game = new GameStateJS();
+var proposedMove;
 
-function updateProposedMove() {
-    var proposedMove = game.getProposedMove(),
-        normalColour = "#111111",
+function updateArrows() {
+    var normalColour = "#111111",
         proposedColour = "#BB1111",
         moves = ["up", "down", "left", "right"];
     _.each(moves, function (move) {
         var colour = (move === proposedMove) ? proposedColour : normalColour;
         $('button[name=' + move + ']').css("background-color", colour);
     });
+}
+
+function updateProposedMove() {
+    proposedMove = game.getProposedMove();
+    updateArrows();
 }
 
 function updateCells() {
@@ -33,12 +38,17 @@ function updateCells() {
 }
 
 function update() {
-    updateProposedMove();
     updateCells();
+    updateArrows();
+}
+
+function onButtonHeuristic() {
+    updateProposedMove();
 }
 
 function onButtonMove(move) {
     game = game.move(move);
+    proposedMove = undefined;
     update();
 }
 
