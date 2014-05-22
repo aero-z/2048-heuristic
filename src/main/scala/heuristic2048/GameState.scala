@@ -1,8 +1,10 @@
 package heuristic2048
 
+import scala.util.Random
+
 sealed trait Cell
 case object EmptyCell extends Cell
-case class BlockCell(val number: Int) extends Cell
+case class BlockCell(val exp: Int) extends Cell
 
 sealed abstract class Move(override val toString: String)
 object Move {
@@ -17,24 +19,24 @@ object Move {
 case class GameState(val cells: List[List[Cell]]) {
   def this() = this(List.fill(4, 4)(EmptyCell))
   
-  def getPossibleMoves(): List[(Move, GameState)] = {
+  def getPossibleMoves: List[(Move, GameState)] = {
     Move.all.map(m => (m, move(m))).filter(_._2 != this)
   }
 
   def move(move: Move): GameState = {
-    def combine(line: List[BlockCell]): List[BlockCell] = {
+    def combineLine(line: List[BlockCell]): List[BlockCell] = {
       if (line.length < 2) line
       else {
         if (line(0) == line(1))
-          BlockCell(line(0).number * 2) :: combine(line.drop(2))
+          BlockCell(line(0).exp + 1) :: combineLine(line.drop(2))
         else
-          line(0) :: combine(line.tail)
+          line(0) :: combineLine(line.tail)
       }
     }
     def moveLeft(cells: List[List[Cell]]) = {
       cells.map(col => {
         val blocks = col.collect({ case b: BlockCell => b })
-        val combined = combine(blocks)
+        val combined = combineLine(blocks)
         val padding = List.fill(4 - combined.length)(EmptyCell)
         combined ::: padding        
       })
@@ -46,8 +48,27 @@ case class GameState(val cells: List[List[Cell]]) {
       case Move.Down => moveLeft(cells.transpose.map(_.reverse)).map(_.reverse).transpose
     })
   }
+
+  def allPossible2BlockSpawnings: List[GameState] = {
+    cells.flatten.zipWithIndex.filter(_._1 == EmptyCell).map({ case (c, i) => setBlock(i / 4, i % 4, 1) })
+  }
+  
+  def spawnRandom2Block: GameState = {
+    val allSpawnings = allPossible2BlockSpawnings
+    allSpawnings(Random.nextInt(allSpawnings.length))
+  }
   
   def setBlock(x: Int, y: Int, v: Int): GameState = {
-    new GameState(cells.updated(x, cells(x).updated(y, BlockCell(v))))
+    val block =
+      if (v == 0) EmptyCell
+      else BlockCell(v)
+    new GameState(cells.updated(x, cells(x).updated(y, block)))
+  }
+  
+  override def toString = {
+    cells.map(_.map(_ match {
+      case EmptyCell => "."
+      case BlockCell(n) => n.toString
+    }).mkString("\t")).mkString("\n")
   }
 }

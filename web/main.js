@@ -24,7 +24,7 @@ function updateProposedMove() {
 function updateCells() {
     $(".cell_content").each(function (i) {
         var n = game.getCell(Math.floor(i / 4), i % 4),
-            f = (Math.log(n) / Math.LN2 - 1) / 10,
+            f = n / 11,
             r = Math.floor(255 * f),
             g = Math.floor(255 - 255 * f);
         if (n === 0) {
@@ -32,7 +32,7 @@ function updateCells() {
             $(this).text("");
         } else {
             $(this).css("background-color", "rgb(" + r + ", " + g + ", 0)");
-            $(this).text(n);
+            $(this).text(Math.pow(2, n));
         }
     });
 }
@@ -53,14 +53,11 @@ function onButtonMove(move) {
 }
 
 function onClickCell(isLeftButton, x, y) {
-    var value = Math.max(1, game.getCell(x, y));
+    var value = game.getCell(x, y);
     if (isLeftButton) {
-        value *= 2;
-    } else if (value > 1) {
-        value /= 2;
-    }
-    if (value === 1) {
-        value = 0;
+        value += 1;
+    } else if (value > 0) {
+        value -= 1;
     }
     game = game.setBlock(x, y, value);
     update();

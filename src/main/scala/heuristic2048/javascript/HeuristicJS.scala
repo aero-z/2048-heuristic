@@ -29,7 +29,10 @@ class GameStateJS(state: GameState) {
   }
   
   @JSExport
-  def getProposedMove() = {
-    Heuristic.getProposedMove(state).toString
+  def getProposedMove(): String = {
+    Heuristic.getProposedMove(state) match {
+      case None => ""
+      case Some(move) => move.toString
+    }
   }
 }
