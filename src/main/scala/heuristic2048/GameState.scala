@@ -68,7 +68,7 @@ case class GameState(val cells: List[List[Cell]]) {
   override def toString = {
     cells.map(_.map(_ match {
       case EmptyCell => "."
-      case BlockCell(n) => n.toString
+      case BlockCell(n) => (1 << n).toString
     }).mkString("\t")).mkString("\n")
   }
 }
