@@ -2,9 +2,9 @@ package heuristic2048
 
 import scala.util.Random
 
-sealed trait Cell
-case object EmptyCell extends Cell
-case class BlockCell(val exp: Int) extends Cell
+sealed abstract class Cell(val value: Int)
+case object EmptyCell extends Cell(0)
+case class BlockCell(val exp: Int) extends Cell(exp)
 
 sealed abstract class Move(override val toString: String)
 object Move {
@@ -19,7 +19,7 @@ object Move {
 case class GameState(val cells: List[List[Cell]]) {
   def this() = this(List.fill(4, 4)(EmptyCell))
   
-  def getPossibleMoves: List[(Move, GameState)] = {
+  lazy val getPossibleMoves: List[(Move, GameState)] = {
     Move.all.map(m => (m, move(m))).filter(_._2 != this)
   }
 
@@ -49,13 +49,20 @@ case class GameState(val cells: List[List[Cell]]) {
     })
   }
 
-  def allPossible2BlockSpawnings: List[GameState] = {
+  // this should be removed
+  lazy val allPossible2BlockSpawnings: List[GameState] = {
     cells.flatten.zipWithIndex.filter(_._1 == EmptyCell).map({ case (c, i) => setBlock(i / 4, i % 4, 1) })
   }
   
-  def spawnRandom2Block: GameState = {
-    val allSpawnings = allPossible2BlockSpawnings
-    allSpawnings(Random.nextInt(allSpawnings.length))
+  lazy val allEmptyPos: List[(Int, Int)] = {
+    cells.flatten.zipWithIndex.collect({case (EmptyCell, i) => (i / 4, i % 4)})
+  }
+  
+  def spawnRandomBlock: GameState = {
+    val (x, y) = allEmptyPos(Random.nextInt(allEmptyPos.length))
+    val v = if (Random.nextInt(10) == 0) 2
+            else 1
+    setBlock(x, y, v)
   }
   
   def setBlock(x: Int, y: Int, v: Int): GameState = {
@@ -65,7 +72,7 @@ case class GameState(val cells: List[List[Cell]]) {
     new GameState(cells.updated(x, cells(x).updated(y, block)))
   }
   
-  override def toString = {
+  override lazy val toString = {
     cells.map(_.map(_ match {
       case EmptyCell => "."
       case BlockCell(n) => (1 << n).toString

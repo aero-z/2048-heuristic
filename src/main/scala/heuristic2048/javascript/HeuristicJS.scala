@@ -12,10 +12,7 @@ class GameStateJS(state: GameState) {
   
   @JSExport
   def getCell(x: Int, y: Int) = {
-    state.cells(x)(y) match {
-      case EmptyCell => 0
-      case BlockCell(v) => v 
-    }
+    state.cells(x)(y).value
   }
   
   @JSExport
