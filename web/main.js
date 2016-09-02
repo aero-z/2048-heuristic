@@ -69,7 +69,7 @@ function init() {
             onClickCell(true, Math.floor(i / 4), i % 4);
             return true;
         });
-        $(this).on('contextmenu', function (e) {
+        $(this).on('contextmenu', function () {
             onClickCell(false, Math.floor(i / 4), i % 4);
             return false; // prevent default context menu behaviour
         });

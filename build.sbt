@@ -1,13 +1,10 @@
-// Turn this project into a Scala.js project by importing these settings
-scalaJSSettings
+enablePlugins(ScalaJSPlugin)
 
 name := "2048 Heuristic"
 
 version := "0.1-SNAPSHOT"
 
-libraryDependencies ++= Seq(
-    "org.scala-lang.modules.scalajs" %% "scalajs-jasmine-test-framework" % scalaJSVersion % "test"
-)
+scalaVersion := "2.11.7"
 
 commands ++= Seq(Command.single("deploy") { (state, argument) =>
     println("Deploying to " + argument)
@@ -24,5 +21,5 @@ commands ++= Seq(Command.command("jslint") { state =>
 
 addCommandAlias("mydeploy", ";jslint ;deploy ../2048-heuristic-gh-pages")
 
-addCommandAlias("optdeploy", ";optimizeJS ;mydeploy")
+addCommandAlias("optdeploy", ";fullOptJS ;mydeploy")
 
